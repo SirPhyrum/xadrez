@@ -1,11 +1,11 @@
 ﻿using System;
 
 
-namespace tabuleiro
+namespace Tabuleiro
 {
     enum Color
     {
-        Branca,
-        Preta
+        White,
+        Black
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
-using tabuleiro;
+using Tabuleiro;
+using Xadrez;
 
 namespace XadrezConsole
 {
@@ -8,6 +9,12 @@ namespace XadrezConsole
         static void Main(string[] args)
         {
             Board board = new Board(8,8);
+            
+
+
+            Piece p = new Torre(Color.White, board);
+            board.SetPiece(p, new Position(0,0));
+
             Screen.PrintBoard(board);
         }
     }

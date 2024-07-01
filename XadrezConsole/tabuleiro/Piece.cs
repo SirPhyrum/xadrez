@@ -4,22 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace tabuleiro
+namespace Tabuleiro
 {
     
     class Piece
     {
-        public Position Posicao { get; set; }
-        public Color Cor {  get; protected set; }
-        public int QteMovimentos { get; protected set; }
-        public Board Tabuleiro { get; protected set; }
+        public Position Position { get; set; }
+        public Color Color {  get; protected set; }
+        public int Moviments{ get; protected set; }
+        public Board Board { get; protected set; }
 
-        public Piece(Position posicao, Color cor, Board tabuleiro)
+        public Piece(Color color, Board board)
         {
-            Posicao = posicao;
-            Cor = cor;
-            Tabuleiro = tabuleiro;
-            QteMovimentos = 0;
+            Position = null;
+            Color = color;
+            Board = board;
+            Moviments = 0;
         }
     }
 }

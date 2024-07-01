@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace tabuleiro
+namespace Tabuleiro
 {
      class Board
     {
@@ -18,6 +18,12 @@ namespace tabuleiro
             Lines = lines;
             Columns = columns;
             Pieces = new Piece[Lines,Columns];
+        }
+
+        public void SetPiece(Piece p, Position pos)
+        {
+            Pieces[pos.Line,pos.Column] = p;
+            p.Position = pos;
         }
     }
 }
