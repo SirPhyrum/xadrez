@@ -12,12 +12,9 @@ namespace XadrezConsole
             try
             {
                 Board board = new Board(8, 8);
-
-
-
                 Piece p = new Torre(Color.White, board);
-                board.SetPiece(p, new Position(0, 0));
-                board.SetPiece(p, new Position(0, 10));
+                board.SetPiece(p, new ChessPosition('h', 4).ToPosition());
+
                 Screen.PrintBoard(board);
             }
             catch (BoardException e) 
