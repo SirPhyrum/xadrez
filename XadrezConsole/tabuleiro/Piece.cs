@@ -21,5 +21,10 @@ namespace Tabuleiro
             Board = board;
             Moviments = 0;
         }
+
+        public void AddMoving()
+        {
+            Moviments++;
+        }
     }
 }

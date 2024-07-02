@@ -1,7 +1,8 @@
 ﻿using System;
 using Tabuleiro;
 using Xadrez;
-using XadrezConsole.Tabuleiro;
+using XadrezConsole.Xadrez;
+
 
 namespace XadrezConsole
 {
@@ -11,13 +12,9 @@ namespace XadrezConsole
         {
             try
             {
-                Board board = new Board(8, 8);
-                Piece p = new Torre(Color.Black, board);
-                board.SetPiece(p, new ChessPosition('h', 4).ToPosition());
-                Piece pp = new Torre(Color.White, board);
-                board.SetPiece(pp, new ChessPosition('g', 4).ToPosition());
+                ChessMatch partida = new ChessMatch();
 
-                Screen.PrintBoard(board);
+                Screen.PrintBoard(partida.Board);
             }
             catch (BoardException e) 
             {

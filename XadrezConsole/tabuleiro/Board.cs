@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using XadrezConsole.Tabuleiro;
+using Tabuleiro;
 
 namespace Tabuleiro
 {
@@ -40,6 +40,18 @@ namespace Tabuleiro
 
             Pieces[pos.Line, pos.Column] = p;
             p.Position = pos;
+        }
+
+        public Piece DeletePiece(Position pos)
+        {
+            if (Piece(pos) != null)
+                return null;
+
+            Piece x = Piece(pos);
+            x.Position = null;
+            Pieces[pos.Line, pos.Column] = null;
+            return x;
+
         }
 
         public bool ValidPosition(Position pos)
