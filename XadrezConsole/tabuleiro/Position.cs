@@ -14,6 +14,12 @@ namespace Tabuleiro
             Column = coluna;
         }
 
+        public void SetPosition(int linha, int coluna)
+        {
+            Line = linha;
+            Column = coluna;
+        }
+
         public override string ToString()
         {
             return Line + ", " + Column;

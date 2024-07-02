@@ -14,5 +14,50 @@ namespace Xadrez
         {
             return "R";
         }
+
+        public override bool[,] PossibleMoviments()
+        {
+            bool[,] mat = new bool[Board.Lines, Board.Columns];
+
+            Position pos = new Position(0, 0);
+
+            pos.SetPosition(Position.Line - 1, Position.Column);
+            if (Board.ValidPosition(pos) && CanMove(pos))
+                mat[pos.Line, pos.Column] = true;
+
+            pos.SetPosition(Position.Line - 1, Position.Column+1);
+            if (Board.ValidPosition(pos) && CanMove(pos))
+                mat[pos.Line, pos.Column] = true;
+
+            pos.SetPosition(Position.Line, Position.Column+1);
+            if (Board.ValidPosition(pos) && CanMove(pos))
+                mat[pos.Line, pos.Column] = true;
+
+            pos.SetPosition(Position.Line + 1, Position.Column+1);
+            if (Board.ValidPosition(pos) && CanMove(pos))
+                mat[pos.Line, pos.Column] = true;
+
+            pos.SetPosition(Position.Line + 1, Position.Column);
+            if (Board.ValidPosition(pos) && CanMove(pos))
+                mat[pos.Line, pos.Column] = true;
+
+            pos.SetPosition(Position.Line + 1, Position.Column-1);
+            if (Board.ValidPosition(pos) && CanMove(pos))
+                mat[pos.Line, pos.Column] = true;
+
+            pos.SetPosition(Position.Line, Position.Column-1);
+            if (Board.ValidPosition(pos) && CanMove(pos))
+                mat[pos.Line, pos.Column] = true;
+
+            pos.SetPosition(Position.Line - 1, Position.Column-1);
+            if (Board.ValidPosition(pos) && CanMove(pos))
+                mat[pos.Line, pos.Column] = true;
+
+            return mat;
+        }
+
+
+
+
     }
 }

@@ -7,8 +7,8 @@ using Xadrez;
 
 namespace Tabuleiro
 {
-    
-    class Piece
+
+    abstract class Piece
     {
         public Position Position { get; set; }
         public Color Color {  get; protected set; }
@@ -26,6 +26,17 @@ namespace Tabuleiro
         public void AddMoving()
         {
             Moviments++;
+        }
+
+        public virtual bool[,] PossibleMoviments()
+        {
+            return new bool[0, 0];
+        }
+
+        public virtual bool CanMove(Position pos)
+        {
+            Piece p = Board.Piece(pos);
+            return p == null || p.Color != Color;
         }
     }
 }

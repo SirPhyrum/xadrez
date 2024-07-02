@@ -20,7 +20,13 @@ namespace XadrezConsole
                     Screen.PrintBoard(partida.Board);
 
                     Console.Write("Digite a coordenada da peça que pretende mover ");
-                    ChessPosition a = Screen.ReadPosition(); 
+                    ChessPosition a = Screen.ReadPosition();
+                    Position x = a.ToPosition();
+                    bool[,] possiblepositions = partida.Board.Piece(x).PossibleMoviments();
+
+                    Console.Clear();
+                    Screen.PrintBoard(partida.Board, possiblepositions);
+
                     Console.Write("Digite a coordenada de destino da peça ");
                     ChessPosition b = Screen.ReadPosition();
 
@@ -35,3 +41,4 @@ namespace XadrezConsole
     }
 }
  
+
