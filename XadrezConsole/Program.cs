@@ -14,7 +14,18 @@ namespace XadrezConsole
             {
                 ChessMatch partida = new ChessMatch();
 
-                Screen.PrintBoard(partida.Board);
+                while (!partida.Finish)
+                {
+                    Console.Clear();
+                    Screen.PrintBoard(partida.Board);
+
+                    Console.Write("Digite a coordenada da peça que pretende mover ");
+                    ChessPosition a = Screen.ReadPosition(); 
+                    Console.Write("Digite a coordenada de destino da peça ");
+                    ChessPosition b = Screen.ReadPosition();
+
+                    partida.Moving(a.ToPosition(), b.ToPosition());
+                }
             }
             catch (BoardException e) 
             {

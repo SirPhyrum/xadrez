@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Tabuleiro;
+using Xadrez;
 
 namespace XadrezConsole
 {
@@ -37,6 +38,8 @@ namespace XadrezConsole
             {
                 Console.Write((char)(96+i) + " ");
             }
+
+            Console.WriteLine();
         }
 
         public static void PrintPiece(Piece piece)
@@ -55,6 +58,14 @@ namespace XadrezConsole
                 Console.Write(piece);
                 Console.ForegroundColor = colorbase;
             }
+        }
+
+        public static ChessPosition ReadPosition ()
+        {
+            string s = Console.ReadLine();
+            char column = s[0];
+            int line = int.Parse(s[1] + "");
+            return new ChessPosition(column,line);
         }
     }
 }

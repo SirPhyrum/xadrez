@@ -44,7 +44,7 @@ namespace Tabuleiro
 
         public Piece DeletePiece(Position pos)
         {
-            if (Piece(pos) != null)
+            if (Piece(pos) == null)
                 return null;
 
             Piece x = Piece(pos);

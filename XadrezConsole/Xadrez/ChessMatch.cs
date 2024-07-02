@@ -9,12 +9,14 @@ namespace XadrezConsole.Xadrez
         public Board Board { get; private set; }
         private int Turn;
         private Color CurrentColor;
+        public bool Finish {  get; private set; }
 
         public ChessMatch()
         {
             Board = new Board(8,8);
             Turn = 1;
             CurrentColor = Color.White;
+            Finish = false;
             InsertPieces();
         }
 
@@ -28,7 +30,6 @@ namespace XadrezConsole.Xadrez
 
         private void InsertPieces()
         {
-            int posi = 1;
             for (int i = 1; i <= 8; i++)
             {
                 Color color = Color.White;
