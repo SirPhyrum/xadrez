@@ -38,7 +38,7 @@ namespace Xadrez
         public override bool[,] PossibleMoviments()
         {
             int x = 1;
-            if (Color == Color.White)
+            if (Color == Color.Brancas)
                 x = -1;
 
             bool[,] mat = new bool[Board.Lines, Board.Columns];

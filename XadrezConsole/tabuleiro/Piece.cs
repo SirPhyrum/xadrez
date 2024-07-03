@@ -28,6 +28,22 @@ namespace Tabuleiro
             Moviments++;
         }
 
+
+
+        public bool AnyPossibleMoviments()
+        {
+            bool[,] moviments = PossibleMoviments();
+
+            for (int i = 0; i < Board.Lines; i++)
+            {
+                for (int j = 0; j < Board.Columns; j++)
+                {
+                    if (moviments[i, j])
+                        return true;
+                }
+            }
+            return false;
+        }
         public virtual bool[,] PossibleMoviments()
         {
             return new bool[0, 0];

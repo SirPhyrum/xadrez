@@ -8,6 +8,10 @@ namespace Tabuleiro
         public int Line {  get; set; }
         public int Column { get; set; }
 
+        public Position()
+        {
+        }
+
         public Position(int linha, int coluna)
         {
             Line = linha;

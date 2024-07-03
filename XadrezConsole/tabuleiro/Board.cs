@@ -14,6 +14,10 @@ namespace Tabuleiro
 
         public Piece[,] Pieces { get; private set; }
 
+        
+
+
+
         public Board(int lines, int columns)
         {
             Lines = lines;
@@ -66,6 +70,9 @@ namespace Tabuleiro
             if (!ValidPosition(pos))
                 throw new BoardException("Posição inválida!");
         }
+
+        
+
 
     }
 }

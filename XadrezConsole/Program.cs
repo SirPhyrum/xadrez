@@ -10,35 +10,45 @@ namespace XadrezConsole
     {
         static void Main(string[] args)
         {
-            try
-            {
-                ChessMatch partida = new ChessMatch();
 
-                while (!partida.Finish)
+            ChessMatch partida = new ChessMatch();
+
+            while (!partida.Finish)
+            {
+                try
                 {
-                    Console.Clear();
-                    Screen.PrintBoard(partida.Board);
+
+                    Screen.PrintMatch(partida);
 
                     Console.Write("Digite a coordenada da peça que pretende mover ");
-                    ChessPosition a = Screen.ReadPosition();
-                    Position x = a.ToPosition();
-                    bool[,] possiblepositions = partida.Board.Piece(x).PossibleMoviments();
+                    Position origin = Screen.ReadPosition().ToPosition();
+                    partida.ValidOrigin(origin);
+                    bool[,] possiblepositions = partida.Board.Piece(origin).PossibleMoviments();
 
                     Console.Clear();
-                    Screen.PrintBoard(partida.Board, possiblepositions);
+                    Screen.PrintBoard(partida, possiblepositions);
+                    Console.WriteLine();
 
-                    Console.Write("Digite a coordenada de destino da peça ");
-                    ChessPosition b = Screen.ReadPosition();
+                    partida.MakePlay(possiblepositions, origin, partida);
 
-                    partida.Moving(a.ToPosition(), b.ToPosition());
+                    
+
+                }
+                catch (BoardException e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.ReadLine();
+                }
+                catch (FormatException e)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Digite uma coordenada válida!");
+                    Console.ReadLine();
                 }
             }
-            catch (BoardException e) 
-            {
-                Console.WriteLine(e.Message);
-            }
+
         }
     }
 }
- 
+
 
