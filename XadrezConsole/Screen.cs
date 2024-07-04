@@ -16,12 +16,18 @@ namespace XadrezConsole
         public static void PrintMatch(ChessMatch partida)
         {
             Console.Clear();
-            PrintBoard(partida.Board);
+            PrintBoard(partida);
             Console.WriteLine();
-            Screen.PrintCapturedPiece(partida);
+            PrintCapturedPiece(partida);
             Console.WriteLine();
+            if (partida.Check)
+            {
+                Console.WriteLine("Você está em xeque!");
+                Console.WriteLine();
+            }
             Console.WriteLine($"Turno {partida.Turn} \r\nVez das peças {partida.Player}");
             Console.WriteLine();
+
         }
 
         public static void PrintMatch(bool[,] possiblepositions, ChessMatch partida)
@@ -31,18 +37,23 @@ namespace XadrezConsole
             Console.WriteLine();
             PrintCapturedPiece(partida);
             Console.WriteLine();
+            if (partida.Check)
+            {
+                Console.WriteLine("Você está em xeque!");
+                Console.WriteLine();
+            }
             Console.WriteLine($"Turno {partida.Turn} \r\nVez das peças {partida.Player}");
             Console.WriteLine();
         }
-        public static void PrintBoard(Board board)
+        public static void PrintBoard(ChessMatch partida)
         {
-            for (int i = 0; i < board.Lines; i++)
+            for (int i = 0; i < partida.Board.Lines; i++)
             {
-                Console.Write((board.Lines - i) + " ");
+                Console.Write((partida.Board.Lines - i) + " ");
 
-                for (int j = 0; j < board.Columns; j++)
+                for (int j = 0; j < partida.Board.Columns; j++)
                 {
-                    PrintPiece(board.Pieces[i, j]);
+                    Screen.PrintPiece(partida.Board.Pieces[i, j], partida);
                     Console.Write(" ");
                 }
                 Console.WriteLine();
@@ -50,7 +61,7 @@ namespace XadrezConsole
 
             Console.Write("  ");
 
-            for (int i = 1; i <= board.Columns; i++)
+            for (int i = 1; i <= partida.Board.Columns; i++)
             {
                 Console.Write((char)(96 + i) + " ");
             }
@@ -74,7 +85,7 @@ namespace XadrezConsole
                     else
                         Console.BackgroundColor = backgroundColor;
 
-                    PrintPiece(partida.Board.Pieces[i, j]);
+                    Screen.PrintPiece(partida.Board.Pieces[i, j], partida);
                     Console.BackgroundColor = backgroundColor;
 
                     Console.Write(" ");
@@ -92,8 +103,7 @@ namespace XadrezConsole
             Console.WriteLine();
         }
 
-
-        public static void PrintPiece(Piece piece)
+        public static void PrintPiece(Piece piece, ChessMatch partida)
         {
             if (piece == null)
             {
@@ -101,6 +111,18 @@ namespace XadrezConsole
             }
             else
             {
+                ConsoleColor backgroundColor = Console.BackgroundColor;
+                ConsoleColor checkBackgroundColor = ConsoleColor.Red;
+                Color cor;
+                if (partida.Finish == true)
+                    cor = partida.Opponent(partida.Player);
+                else
+                    cor = partida.Player;
+
+                if (piece is Rei && partida.Check == true && piece.Color == cor)
+                {
+                    Console.BackgroundColor = checkBackgroundColor;
+                }
 
                 if (piece.Color == Color.Brancas)
                 {
@@ -116,6 +138,8 @@ namespace XadrezConsole
                     Console.Write(piece);
                     Console.ForegroundColor = colorbase;
                 }
+
+                Console.BackgroundColor = backgroundColor;
             }
         }
 
@@ -134,9 +158,13 @@ namespace XadrezConsole
             ConsoleColor colorbase = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Cyan;
 
-            foreach (Piece piece in partida.CapturedPiecesWhite)
-                Console.Write(piece + " ");
-
+            foreach (Piece piece in partida.CapturedPieces)
+            {
+                if (piece.Color == Color.Brancas)
+                {
+                    Console.Write(piece + " ");
+                }
+            }
             Console.ForegroundColor = colorbase;
 
             Console.Write("\r\n");
@@ -145,9 +173,13 @@ namespace XadrezConsole
 
             Console.ForegroundColor = ConsoleColor.DarkBlue;
 
-            foreach (Piece piece in partida.CapturedPiecesBlack)
-                Console.Write(piece + " ");
-
+            foreach (Piece piece in partida.CapturedPieces)
+            {
+                if (piece.Color == Color.Pretas)
+                {
+                    Console.Write(piece + " ");
+                }
+            }
             Console.ForegroundColor = colorbase;
 
             Console.Write("\r\n");

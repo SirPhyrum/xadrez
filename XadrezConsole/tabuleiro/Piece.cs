@@ -11,8 +11,8 @@ namespace Tabuleiro
     abstract class Piece
     {
         public Position Position { get; set; }
-        public Color Color {  get; protected set; }
-        public int Moviments{ get; protected set; }
+        public Color Color { get; protected set; }
+        public int Moviments { get; protected set; }
         public Board Board { get; protected set; }
 
         public Piece(Color color, Board board)
@@ -28,7 +28,10 @@ namespace Tabuleiro
             Moviments++;
         }
 
-
+        public void DelMoving()
+        {
+            Moviments--;
+        }
 
         public bool AnyPossibleMoviments()
         {
@@ -54,5 +57,6 @@ namespace Tabuleiro
             Piece p = Board.Piece(pos);
             return p == null || p.Color != Color;
         }
+
     }
 }

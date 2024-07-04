@@ -52,7 +52,6 @@ namespace Tabuleiro
                 return null;
 
             Piece x = Piece(pos);
-            x.Position = null;
             Pieces[pos.Line, pos.Column] = null;
             return x;
 
