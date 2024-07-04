@@ -10,7 +10,7 @@ namespace Tabuleiro
 
     abstract class Piece
     {
-        public Position Position { get; set; }
+        public Position? Position { get; set; }
         public Color Color { get; protected set; }
         public int Moviments { get; protected set; }
         public Board Board { get; protected set; }
@@ -47,10 +47,8 @@ namespace Tabuleiro
             }
             return false;
         }
-        public virtual bool[,] PossibleMoviments()
-        {
-            return new bool[0, 0];
-        }
+        public abstract bool[,] PossibleMoviments();
+        
 
         public virtual bool CanMove(Position pos)
         {

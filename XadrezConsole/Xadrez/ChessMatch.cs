@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Tabuleiro;
 using Xadrez;
@@ -41,7 +42,7 @@ namespace XadrezConsole.Xadrez
                         if (m[i, j])
                         {
                             Position origin = p.Position;
-                            Position target = new Position(i,j);
+                            Position target = new Position(i, j);
                             Piece captured = Moving(origin, target);
                             bool xeque = ValidateCheck(color);
                             BackMoving(origin, target, captured);
@@ -51,7 +52,7 @@ namespace XadrezConsole.Xadrez
                         }
 
                     }
-                }                
+                }
             }
             return true;
         }
@@ -60,6 +61,7 @@ namespace XadrezConsole.Xadrez
 
         public bool ValidateCheck(Color colorPlayer)
         {
+
             Piece rei = SearchRei(colorPlayer);
 
             List<Piece> pieces = PiecesInGame(Opponent(colorPlayer));
@@ -77,7 +79,7 @@ namespace XadrezConsole.Xadrez
         private Piece SearchRei(Color colorPlayer)
         {
             Piece p;
-            Piece rei = new Rei(colorPlayer, Board);
+            Piece rei = new Rei(colorPlayer, Board, this);
             bool x = false;
 
             for (int i = 0; i < Board.Lines; i++)
@@ -107,7 +109,7 @@ namespace XadrezConsole.Xadrez
             else
                 return Color.Brancas;
         }
-        private List<Piece> PiecesInGame(Color color)
+        public List<Piece> PiecesInGame(Color color)
         {
             List<Piece> pieces = new List<Piece>();
             Piece p;
@@ -204,14 +206,48 @@ namespace XadrezConsole.Xadrez
         public Piece Moving(Position origin, Position target)
         {
             Piece p = Board.DeletePiece(origin);
+
+            if (p is Rei && p.Moviments == 0 && target.Column == 6 || target.Column == 2)
+            {
+
+                if (target.Column == 6)
+                {
+                    Position torigin = new Position(origin.Line, 7);
+                    Position ttarget = new Position(origin.Line, 5);
+
+                    Piece t = Board.DeletePiece(torigin);
+                    p.AddMoving();
+                    Board.SetPiece(t, ttarget);
+                }
+
+                if (target.Column == 2)
+                {
+                    Position torigin = new Position(origin.Line, 0);
+                    Position ttarget = new Position(origin.Line, 3);
+
+                    Piece t = Board.DeletePiece(torigin);
+                    p.AddMoving();
+                    Board.SetPiece(t, ttarget);
+
+                }
+            }
+
+
             p.AddMoving();
             Piece capturedpiece = Board.DeletePiece(target);
+
             if (capturedpiece != null)
                 Capture(capturedpiece);
+
             Board.SetPiece(p, target);
+
+
+
 
             return capturedpiece;
         }
+
+
 
         public void Capture(Piece p)
         {
@@ -264,12 +300,12 @@ namespace XadrezConsole.Xadrez
                 {
                     Board.SetPiece(new Torre(color, Board), new ChessPosition('a', i).ToPosition());
                     Board.SetPiece(new Torre(color, Board), new ChessPosition('h', i).ToPosition());
-                    Board.SetPiece(new Cavalo(color, Board), new ChessPosition('b', i).ToPosition());
-                    Board.SetPiece(new Cavalo(color, Board), new ChessPosition('g', i).ToPosition());
-                    Board.SetPiece(new Bispo(color, Board), new ChessPosition('c', i).ToPosition());
-                    Board.SetPiece(new Bispo(color, Board), new ChessPosition('f', i).ToPosition());
-                    Board.SetPiece(new Dama(color, Board), new ChessPosition('d', i).ToPosition());
-                    Board.SetPiece(new Rei(color, Board), new ChessPosition('e', i).ToPosition());
+                    //Board.SetPiece(new Cavalo(color, Board), new ChessPosition('b', i).ToPosition());
+                    //Board.SetPiece(new Cavalo(color, Board), new ChessPosition('g', i).ToPosition());
+                    //Board.SetPiece(new Bispo(color, Board), new ChessPosition('c', i).ToPosition());
+                    //Board.SetPiece(new Bispo(color, Board), new ChessPosition('f', i).ToPosition());
+                    //Board.SetPiece(new Dama(color, Board), new ChessPosition('d', i).ToPosition());
+                    Board.SetPiece(new Rei(color, Board, this), new ChessPosition('e', i).ToPosition());
                 }
 
                 /*if (i == 7 || i == 2)

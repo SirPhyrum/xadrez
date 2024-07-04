@@ -63,7 +63,7 @@ namespace Tabuleiro
                 return false;
             return true;
         }
-
+        
         public void ValidatePosition(Position pos)
         {
             if (!ValidPosition(pos))
