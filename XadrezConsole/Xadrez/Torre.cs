@@ -27,12 +27,12 @@ namespace Xadrez
             {
                 mat[pos.Line, pos.Column] = true;
 
-                if(Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
+                if (Board.Piece(pos) != null && Board.Piece(pos).Color != Color)
                 {
                     break;
                 }
                 pos.Line--;
-               
+
             }
 
 
@@ -49,7 +49,7 @@ namespace Xadrez
                 pos.Column++;
 
             }
-            
+
             pos.SetPosition(Position.Line + 1, Position.Column);
 
             while (Board.ValidPosition(pos) && CanMove(pos))

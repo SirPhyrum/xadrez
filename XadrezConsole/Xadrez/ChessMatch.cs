@@ -16,9 +16,12 @@ namespace XadrezConsole.Xadrez
         public bool Check { get; private set; }
         public List<Piece> CapturedPieces { get; private set; }
 
+        public Piece? EnPassant { get; private set; }
+
         public ChessMatch()
         {
             CapturedPieces = new List<Piece>();
+            EnPassant = null;
             Board = new Board(8, 8);
             Turn = 1;
             Player = Color.Brancas;
@@ -171,6 +174,32 @@ namespace XadrezConsole.Xadrez
                 BackMoving(origin, target, p);
                 throw new BoardException("Você não pode se colocar em xeque!");
             }
+
+            Piece a = Board.Piece(target);
+            if (a is Peao)
+            {
+                if (a.Position.Line == 0 || a.Position.Line == 7)
+                {
+
+                    Piece piece = Promotion(a, target);
+
+                    a = Board.DeletePiece(target);
+
+                    piece.AddMoving();
+                    Board.SetPiece(piece, target);
+
+                }
+
+                if (target.Line == (origin.Line - 2) || target.Line == (origin.Line + 2))
+                {
+                    EnPassant = a;
+                }
+                else
+                {
+                    EnPassant = null;
+                }
+            }
+
             if (ValidateCheck(Opponent(Player)))
             {
                 Check = true;
@@ -189,6 +218,54 @@ namespace XadrezConsole.Xadrez
                 Turn++;
                 ChangePlayer();
             }
+
+
+        }
+
+        private Piece Promotion(Piece a, Position target)
+        {
+            Piece piece = new Dama(Player, Board);
+
+            bool aux = true;
+
+            while (aux)
+            {
+                Console.WriteLine();
+                Console.Write("Peão promovido!!\r\nEscolha a nova peça (D, T, C, B): ");
+                string s = Console.ReadLine();
+                char c = s[0];
+                switch (c)
+                {
+                    case 'D':
+                        piece = new Dama(a.Color, a.Board);
+                        aux = false;
+                        break;
+
+                    case 'T':
+                        piece = new Torre(a.Color, a.Board);
+                        aux = false;
+                        break;
+
+                    case 'C':
+                        piece = new Cavalo(a.Color, a.Board);
+                        aux = false;
+                        break;
+
+                    case 'B':
+                        piece = new Bispo(a.Color, a.Board);
+                        aux = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Escolha uma peça válida!");
+                        Console.ReadLine();
+
+                        Screen.PrintMatch(this);
+
+                        break;
+                }
+            }
+            return piece;
         }
 
         private void BackMoving(Position origin, Position target, Piece captured)
@@ -207,7 +284,7 @@ namespace XadrezConsole.Xadrez
         {
             Piece p = Board.DeletePiece(origin);
 
-            if (p is Rei && p.Moviments == 0 && target.Column == 6 || target.Column == 2)
+            if (!Check && p is Rei && p.Moviments == 0 && (target.Column == 6 || target.Column == 2))
             {
 
                 if (target.Column == 6)
@@ -228,10 +305,8 @@ namespace XadrezConsole.Xadrez
                     Piece t = Board.DeletePiece(torigin);
                     p.AddMoving();
                     Board.SetPiece(t, ttarget);
-
                 }
             }
-
 
             p.AddMoving();
             Piece capturedpiece = Board.DeletePiece(target);
@@ -241,8 +316,20 @@ namespace XadrezConsole.Xadrez
 
             Board.SetPiece(p, target);
 
+            if (p is Peao)
+            {
+                if (origin.Column != target.Column)
+                {
+                    int x = -1;
 
+                    if (p.Color == Color.Brancas)
+                        x = 1;
 
+                    Position posi = new Position(target.Line + (1 * x), target.Column);
+                    Piece peao = Board.DeletePiece(posi);
+                    Capture(peao);
+                }
+            }
 
             return capturedpiece;
         }
@@ -300,15 +387,15 @@ namespace XadrezConsole.Xadrez
                 {
                     Board.SetPiece(new Torre(color, Board), new ChessPosition('a', i).ToPosition());
                     Board.SetPiece(new Torre(color, Board), new ChessPosition('h', i).ToPosition());
-                    //Board.SetPiece(new Cavalo(color, Board), new ChessPosition('b', i).ToPosition());
-                    //Board.SetPiece(new Cavalo(color, Board), new ChessPosition('g', i).ToPosition());
-                    //Board.SetPiece(new Bispo(color, Board), new ChessPosition('c', i).ToPosition());
-                    //Board.SetPiece(new Bispo(color, Board), new ChessPosition('f', i).ToPosition());
-                    //Board.SetPiece(new Dama(color, Board), new ChessPosition('d', i).ToPosition());
+                    Board.SetPiece(new Cavalo(color, Board), new ChessPosition('b', i).ToPosition());
+                    Board.SetPiece(new Cavalo(color, Board), new ChessPosition('g', i).ToPosition());
+                    Board.SetPiece(new Bispo(color, Board), new ChessPosition('c', i).ToPosition());
+                    Board.SetPiece(new Bispo(color, Board), new ChessPosition('f', i).ToPosition());
+                    Board.SetPiece(new Dama(color, Board), new ChessPosition('d', i).ToPosition());
                     Board.SetPiece(new Rei(color, Board, this), new ChessPosition('e', i).ToPosition());
                 }
 
-                /*if (i == 7 || i == 2)
+                if (i == 7 || i == 2)
                 {
                     for (int j = 0; j <= 7; j++)
                     {
@@ -320,10 +407,10 @@ namespace XadrezConsole.Xadrez
                         if (i == 7)
                             k = 1;
 
-                        Board.SetPiece(new Peao(color, Board), new Position(k, j));
+                        Board.SetPiece(new Peao(color, Board, this), new Position(k, j));
 
                     }
-                }*/
+                }
             }
         }
     }

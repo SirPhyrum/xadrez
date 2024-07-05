@@ -48,7 +48,7 @@ namespace Tabuleiro
             return false;
         }
         public abstract bool[,] PossibleMoviments();
-        
+
 
         public virtual bool CanMove(Position pos)
         {

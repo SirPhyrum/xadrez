@@ -2,10 +2,10 @@
 
 namespace Tabuleiro
 {
-    
+
     class Position
     {
-        public int Line {  get; set; }
+        public int Line { get; set; }
         public int Column { get; set; }
 
         public Position()

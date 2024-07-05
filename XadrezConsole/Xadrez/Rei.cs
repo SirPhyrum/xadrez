@@ -57,7 +57,7 @@ namespace Xadrez
             pos.SetPosition(Position.Line - 1, Position.Column - 1);
             if (Board.ValidPosition(pos) && CanMove(pos))
                 mat[pos.Line, pos.Column] = true;
-            
+
             if (Moviments == 0 && !Partida.Check && Partida.Player == Color)
             {
                 Position t1 = new Position(Position.Line, Position.Column + 3);
@@ -67,7 +67,7 @@ namespace Xadrez
                     Position p2 = new Position(Position.Line, Position.Column + 2);
 
                     if (Board.Piece(p1) == null && Board.Piece(p2) == null
-                      &&  Safe(p1) && Safe(p2))
+                      && Safe(p1) && Safe(p2))
                     {
                         mat[p2.Line, p2.Column] = true;
                     }
@@ -79,23 +79,18 @@ namespace Xadrez
                     Position p1 = new Position(Position.Line, Position.Column - 1);
                     Position p2 = new Position(Position.Line, Position.Column - 2);
                     Position p3 = new Position(Position.Line, Position.Column - 3);
-                    if (Board.Piece(p1) == null && Board.Piece(p2) == null 
+                    if (Board.Piece(p1) == null && Board.Piece(p2) == null
                         && Board.Piece(p3) == null && Safe(p1) && Safe(p2))
                     {
                         mat[p2.Line, p2.Column] = true;
                     }
                 }
-
-
             }
-            
-
             return mat;
         }
 
         bool Safe(Position pos)
         {
-
             List<Piece> pieces = Partida.PiecesInGame(Partida.Opponent(Color));
 
             foreach (Piece piece in pieces)
@@ -109,7 +104,7 @@ namespace Xadrez
             return true;
         }
 
-        
+
 
         bool ValidateT(Position pos)
         {
@@ -120,6 +115,5 @@ namespace Xadrez
             else
                 return false;
         }
-
     }
 }

@@ -14,7 +14,7 @@ namespace Tabuleiro
 
         public Piece[,] Pieces { get; private set; }
 
-        
+
 
 
 
@@ -39,7 +39,7 @@ namespace Tabuleiro
 
         public void SetPiece(Piece p, Position pos)
         {
-            if(ExistPiece(pos)) 
+            if (ExistPiece(pos))
                 throw new BoardException("Já existe uma peça na posição escolhida!");
 
             Pieces[pos.Line, pos.Column] = p;
@@ -59,18 +59,18 @@ namespace Tabuleiro
 
         public bool ValidPosition(Position pos)
         {
-            if(pos.Line < 0 || pos.Line >= Lines || pos.Column < 0 || pos.Column >= Columns)
+            if (pos.Line < 0 || pos.Line >= Lines || pos.Column < 0 || pos.Column >= Columns)
                 return false;
             return true;
         }
-        
+
         public void ValidatePosition(Position pos)
         {
             if (!ValidPosition(pos))
                 throw new BoardException("Posição inválida!");
         }
 
-        
+
 
 
     }
