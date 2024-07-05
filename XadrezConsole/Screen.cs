@@ -20,14 +20,13 @@ namespace XadrezConsole
             Console.WriteLine();
             PrintCapturedPiece(partida);
             Console.WriteLine();
-            if (partida.Check)
+            Console.WriteLine($"Turno {partida.Turn} \r\nVez das peças {partida.Player}");
+            Console.WriteLine();
+            if (partida.Check && !partida.Finish)
             {
                 Console.WriteLine("Você está em xeque!");
                 Console.WriteLine();
             }
-            Console.WriteLine($"Turno {partida.Turn} \r\nVez das peças {partida.Player}");
-            Console.WriteLine();
-
         }
 
         public static void PrintMatch(bool[,] possiblepositions, ChessMatch partida)
@@ -37,13 +36,13 @@ namespace XadrezConsole
             Console.WriteLine();
             PrintCapturedPiece(partida);
             Console.WriteLine();
-            if (partida.Check)
+            Console.WriteLine($"Turno {partida.Turn} \r\nVez das peças {partida.Player}");
+            Console.WriteLine();
+            if (partida.Check && !partida.Finish)
             {
                 Console.WriteLine("Você está em xeque!");
                 Console.WriteLine();
             }
-            Console.WriteLine($"Turno {partida.Turn} \r\nVez das peças {partida.Player}");
-            Console.WriteLine();
         }
         public static void PrintBoard(ChessMatch partida)
         {

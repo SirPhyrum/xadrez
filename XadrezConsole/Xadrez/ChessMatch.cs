@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Tabuleiro;
@@ -15,7 +16,7 @@ namespace XadrezConsole.Xadrez
         public bool Finish { get; private set; }
         public bool Check { get; private set; }
         public List<Piece> CapturedPieces { get; private set; }
-
+        public bool Draw {  get; private set; }
         public Piece? EnPassant { get; private set; }
 
         public ChessMatch()
@@ -27,13 +28,22 @@ namespace XadrezConsole.Xadrez
             Player = Color.Brancas;
             Finish = false;
             Check = false;
+            Draw = false;
             InsertPieces();
         }
 
         public bool CheckMate(Color color)
         {
+            bool check, mov = false;
+
             if (!ValidateCheck(color))
-                return false;
+            {
+                check = false;
+            }
+            else
+            {
+                check = true;
+            }
 
             foreach (Piece p in PiecesInGame(color))
             {
@@ -51,20 +61,27 @@ namespace XadrezConsole.Xadrez
                             BackMoving(origin, target, captured);
 
                             if (!xeque)
-                                return false;
+                                mov = true;                                
                         }
-
                     }
                 }
+            }                     
+
+            if (check && !mov)
+            {
+                return true;
             }
-            return true;
+            else if (!check && !mov)
+            {
+                Draw = true;
+                return false;
+            }
+            else
+                return false;
         }
-
-
 
         public bool ValidateCheck(Color colorPlayer)
         {
-
             Piece rei = SearchRei(colorPlayer);
 
             List<Piece> pieces = PiecesInGame(Opponent(colorPlayer));
@@ -101,7 +118,6 @@ namespace XadrezConsole.Xadrez
                 if (x)
                     break;
             }
-
             return rei;
         }
 
@@ -127,7 +143,6 @@ namespace XadrezConsole.Xadrez
                         pieces.Add(p);
                 }
             }
-
             return pieces;
         }
 
@@ -161,7 +176,6 @@ namespace XadrezConsole.Xadrez
 
                     break;
                 }
-
             }
         }
 
@@ -180,14 +194,12 @@ namespace XadrezConsole.Xadrez
             {
                 if (a.Position.Line == 0 || a.Position.Line == 7)
                 {
-
                     Piece piece = Promotion(a, target);
 
                     a = Board.DeletePiece(target);
 
                     piece.AddMoving();
                     Board.SetPiece(piece, target);
-
                 }
 
                 if (target.Line == (origin.Line - 2) || target.Line == (origin.Line + 2))
@@ -218,8 +230,6 @@ namespace XadrezConsole.Xadrez
                 Turn++;
                 ChangePlayer();
             }
-
-
         }
 
         private Piece Promotion(Piece a, Position target)
@@ -330,11 +340,8 @@ namespace XadrezConsole.Xadrez
                     Capture(peao);
                 }
             }
-
             return capturedpiece;
         }
-
-
 
         public void Capture(Piece p)
         {
@@ -368,7 +375,6 @@ namespace XadrezConsole.Xadrez
                 case Color.Pretas:
                     Player = Color.Brancas;
                     break;
-
             }
         }
 
@@ -408,7 +414,6 @@ namespace XadrezConsole.Xadrez
                             k = 1;
 
                         Board.SetPiece(new Peao(color, Board, this), new Position(k, j));
-
                     }
                 }
             }

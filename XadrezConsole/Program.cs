@@ -10,16 +10,14 @@ namespace XadrezConsole
     {
         static void Main(string[] args)
         {
-
             ChessMatch partida = new ChessMatch();
 
-            while (!partida.Finish)
+            while (!partida.Finish && !partida.Draw)
             {
                 try
                 {
                     Screen.PrintMatch(partida);
                     Console.WriteLine();
-
 
                     Console.Write("Digite a coordenada da peça que pretende mover ");
                     Position origin = Screen.ReadPosition().ToPosition();
@@ -31,9 +29,6 @@ namespace XadrezConsole
                     Console.WriteLine();
 
                     partida.MakePlay(possiblepositions, origin, partida);
-
-
-
                 }
                 catch (BoardException e)
                 {
@@ -53,10 +48,16 @@ namespace XadrezConsole
                     Console.ReadLine();
                 }
             }
-            Screen.PrintMatch(partida);
-            Console.WriteLine();
-            Console.WriteLine($"AS PEÇAS {partida.Player} VENCERAM!!!");
-
+            if (partida.Finish)
+            {
+                Screen.PrintMatch(partida);
+                Console.WriteLine($"AS PEÇAS {partida.Player} VENCERAM!!!");
+            }
+            else
+            {
+                Screen.PrintMatch(partida);
+                Console.WriteLine($"JOGO EMPATADO!!!");
+            }
         }
     }
 }

@@ -11,12 +11,7 @@ namespace Tabuleiro
     {
         public int Lines { get; set; }
         public int Columns { get; set; }
-
         public Piece[,] Pieces { get; private set; }
-
-
-
-
 
         public Board(int lines, int columns)
         {
@@ -27,7 +22,6 @@ namespace Tabuleiro
 
         public Piece Piece(Position position)
         {
-
             return Pieces[position.Line, position.Column];
         }
 
@@ -54,7 +48,6 @@ namespace Tabuleiro
             Piece x = Piece(pos);
             Pieces[pos.Line, pos.Column] = null;
             return x;
-
         }
 
         public bool ValidPosition(Position pos)
@@ -69,10 +62,6 @@ namespace Tabuleiro
             if (!ValidPosition(pos))
                 throw new BoardException("Posição inválida!");
         }
-
-
-
-
     }
 }
 

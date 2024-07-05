@@ -56,8 +56,6 @@ namespace Xadrez
                 x = -1;
             }
 
-
-
             bool[,] mat = new bool[Board.Lines, Board.Columns];
 
             Position pos = new Position(0, 0);

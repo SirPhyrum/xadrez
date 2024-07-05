@@ -20,7 +20,6 @@ namespace Xadrez
 
             Position pos = new Position(0, 0);
 
-
             pos.SetPosition(Position.Line - 1, Position.Column - 1);
 
             while (Board.ValidPosition(pos) && CanMove(pos))
@@ -33,9 +32,7 @@ namespace Xadrez
                 }
                 pos.Line--;
                 pos.Column--;
-
             }
-
 
             pos.SetPosition(Position.Line - 1, Position.Column + 1);
 
@@ -49,7 +46,6 @@ namespace Xadrez
                 }
                 pos.Line--;
                 pos.Column++;
-
             }
 
             pos.SetPosition(Position.Line + 1, Position.Column + 1);
@@ -64,7 +60,6 @@ namespace Xadrez
                 }
                 pos.Line++;
                 pos.Column++;
-
             }
 
             pos.SetPosition(Position.Line + 1, Position.Column - 1);
@@ -78,11 +73,8 @@ namespace Xadrez
                 }
                 pos.Line++;
                 pos.Column--;
-
             }
-
             return mat;
         }
-
     }
 }

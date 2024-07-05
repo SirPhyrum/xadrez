@@ -2,7 +2,6 @@
 
 namespace Tabuleiro
 {
-
     class Position
     {
         public int Line { get; set; }

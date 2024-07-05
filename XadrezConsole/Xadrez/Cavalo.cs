@@ -25,7 +25,6 @@ namespace Xadrez
 
             while (x)
             {
-
                 pos.SetPosition(Position.Line + (1 * a), Position.Column + (2 * b));
                 if (Board.ValidPosition(pos) && CanMove(pos))
                     mat[pos.Line, pos.Column] = true;
@@ -51,12 +50,9 @@ namespace Xadrez
                     case (-1, 1):
                         x = false;
                         break;
-
                 }
             }
-
             return mat;
         }
-
     }
 }

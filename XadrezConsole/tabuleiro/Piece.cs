@@ -49,12 +49,10 @@ namespace Tabuleiro
         }
         public abstract bool[,] PossibleMoviments();
 
-
         public virtual bool CanMove(Position pos)
         {
             Piece p = Board.Piece(pos);
             return p == null || p.Color != Color;
         }
-
     }
 }
